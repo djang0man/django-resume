@@ -16,6 +16,25 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path
 
+from django.conf.urls import url, include
+from rest_framework import routers
+from resume import views
+
+router = routers.DefaultRouter()
+router.register(r'users', views.UserViewSet)
+router.register(r'groups', views.GroupViewSet)
+router.register(r'skills', views.SkillViewSet)
+router.register(r'companies', views.CompanyViewSet)
+router.register(r'positions', views.PositionViewSet)
+router.register(r'schools', views.SchoolViewSet)
+router.register(r'programs', views.ProgramViewSet)
+router.register(r'courses', views.CourseViewSet)
+router.register(r'institutions', views.InstitutionViewSet)
+router.register(r'certifications', views.CertificationViewSet)
+router.register(r'projects', views.ProjectViewSet)
+
 urlpatterns = [
     path('admin/', admin.site.urls),
+    url(r'^', include(router.urls)),
+    url(r'^api-auth/', include('rest_framework.urls', namespace='rest_framework'))
 ]
