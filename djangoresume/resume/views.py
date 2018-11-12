@@ -4,8 +4,10 @@
 
 from django.contrib.auth.models import User, Group
 from rest_framework import viewsets
-from resume.serializers import UserSerializer, GroupSerializer, SkillSerializer, CompanySerializer, PositionSerializer, SchoolSerializer,\
-                               ProgramSerializer, CourseSerializer, InstitutionSerializer, CertificationSerializer, ProjectSerializer, UserProfileSerializer
+from resume.serializers import UserSerializer, GroupSerializer,\
+    SkillSerializer, CompanySerializer, PositionSerializer, SchoolSerializer,\
+    ProgramSerializer, CourseSerializer, InstitutionSerializer,\
+    CertificationSerializer, ProjectSerializer, UserProfileSerializer
 
 from resume.models import Skill, Company, Position, School, Program, Course,\
                           Institution, Certification, Project, UserProfile
