@@ -5,10 +5,10 @@
 from django.contrib.auth.models import User, Group
 from rest_framework import viewsets
 from resume.serializers import UserSerializer, GroupSerializer, SkillSerializer, CompanySerializer, PositionSerializer, SchoolSerializer,\
-                               ProgramSerializer, CourseSerializer, InstitutionSerializer, CertificationSerializer, ProjectSerializer
+                               ProgramSerializer, CourseSerializer, InstitutionSerializer, CertificationSerializer, ProjectSerializer, UserProfileSerializer
 
 from resume.models import Skill, Company, Position, School, Program, Course,\
-                          Institution, Certification, Project
+                          Institution, Certification, Project, UserProfile
 
 
 class UserViewSet(viewsets.ModelViewSet):
@@ -25,6 +25,14 @@ class GroupViewSet(viewsets.ModelViewSet):
     """
     queryset = Group.objects.all()
     serializer_class = GroupSerializer
+
+
+class UserProfileViewSet(viewsets.ModelViewSet):
+    """
+    API endpoint that allows groups to be viewed or edited.
+    """
+    queryset = UserProfile.objects.all()
+    serializer_class = UserProfileSerializer
 
 
 class SkillViewSet(viewsets.ModelViewSet):

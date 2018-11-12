@@ -23,6 +23,7 @@ from resume import views
 router = routers.DefaultRouter()
 router.register(r'users', views.UserViewSet)
 router.register(r'groups', views.GroupViewSet)
+router.register(r'profiles', views.UserProfileViewSet)
 router.register(r'skills', views.SkillViewSet)
 router.register(r'companies', views.CompanyViewSet)
 router.register(r'positions', views.PositionViewSet)
