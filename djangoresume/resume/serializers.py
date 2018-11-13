@@ -26,7 +26,7 @@ class UserProfileSerializer(serializers.HyperlinkedModelSerializer):
 class SkillSerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
         model = Skill
-        fields = ('name',)
+        fields = ('name', 'user')
 
 
 class CompanySerializer(serializers.HyperlinkedModelSerializer):
