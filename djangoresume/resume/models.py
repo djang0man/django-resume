@@ -86,7 +86,7 @@ class Course(models.Model):
     name = models.CharField(max_length=128)
     url = models.URLField(blank=True, null=True)
     description = models.TextField(blank=True, null=True)
-    program = models.ManyToManyField('Program', related_name='courses')
+    program = models.ForeignKey('Program', on_delete=models.CASCADE)
     profile = models.ManyToManyField('Profile', related_name='courses')
     created_date = models.DateTimeField(auto_now_add=True)
 
