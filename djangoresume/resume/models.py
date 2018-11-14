@@ -4,7 +4,7 @@ from django.contrib.auth.models import User
 # Create your models here.
 
 
-class UserProfile(models.Model):
+class Profile(models.Model):
     name = models.CharField(max_length=128, unique=True)
     email = models.EmailField()
     location = models.CharField(max_length=128, blank=True, null=True)
@@ -17,12 +17,12 @@ class UserProfile(models.Model):
     created_date = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
-        return 'Profile for {}'.format(self.user.username)
+        return self.name
 
 
 class Skill(models.Model):
     name = models.CharField(max_length=128, unique=True)
-    user = models.ManyToManyField(User, related_name='skills')
+    profile = models.ManyToManyField('Profile', related_name='skills')
     created_date = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
@@ -32,7 +32,7 @@ class Skill(models.Model):
 class Company(models.Model):
     name = models.CharField(max_length=128, unique=True)
     url = models.URLField()
-    user = models.ManyToManyField(User, related_name='companies')
+    profile = models.ManyToManyField('Profile', related_name='companies')
     created_date = models.DateTimeField(auto_now_add=True)
 
     class Meta:
@@ -45,15 +45,11 @@ class Company(models.Model):
 class Position(models.Model):
     title = models.CharField(max_length=128)
     description = models.TextField(blank=True, null=True)
-    company = models.ForeignKey('Company', on_delete=models.CASCADE)
     is_current = models.NullBooleanField()
     start_date = models.DateField()
     end_date = models.DateField(blank=True, null=True)
-    company = models.OneToOneField(
-        Company,
-        on_delete=models.CASCADE
-    )
-    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    company = models.ForeignKey('Company', on_delete=models.CASCADE)
+    profile = models.ForeignKey('Profile', on_delete=models.CASCADE)
     created_date = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
@@ -63,7 +59,7 @@ class Position(models.Model):
 class School(models.Model):
     name = models.CharField(max_length=128, unique=True)
     url = models.URLField()
-    user = models.ManyToManyField(User, related_name='schools')
+    profile = models.ManyToManyField('Profile', related_name='schools')
     created_date = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
@@ -75,15 +71,11 @@ class Program(models.Model):
     url = models.URLField(blank=True, null=True)
     degree = models.CharField(max_length=64, blank=True, null=True)
     description = models.TextField(blank=True, null=True)
-    school = models.ForeignKey('School', on_delete=models.CASCADE)
     is_current = models.NullBooleanField()
     start_date = models.DateField()
     end_date = models.DateField(blank=True, null=True)
-    school = models.OneToOneField(
-        School,
-        on_delete=models.CASCADE
-    )
-    user = models.ManyToManyField(User, related_name='programs')
+    school = models.ForeignKey('School', on_delete=models.CASCADE)
+    profile = models.ManyToManyField('Profile', related_name='programs')
     created_date = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
@@ -94,8 +86,8 @@ class Course(models.Model):
     name = models.CharField(max_length=128)
     url = models.URLField(blank=True, null=True)
     description = models.TextField(blank=True, null=True)
-    program = models.ForeignKey('Program', on_delete=models.CASCADE)
-    user = models.ManyToManyField(User, related_name='courses')
+    program = models.ManyToManyField('Program', related_name='courses')
+    profile = models.ManyToManyField('Profile', related_name='courses')
     created_date = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
@@ -105,7 +97,7 @@ class Course(models.Model):
 class Institution(models.Model):
     name = models.CharField(max_length=128, unique=True)
     url = models.URLField(blank=True, null=True)
-    user = models.ManyToManyField(User, related_name='institutions')
+    profile = models.ManyToManyField('Profile', related_name='institutions')
     created_date = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
@@ -116,12 +108,11 @@ class Certification(models.Model):
     name = models.CharField(max_length=128)
     url = models.URLField(blank=True, null=True)
     description = models.TextField(blank=True, null=True)
-    institution = models.ForeignKey('Institution', on_delete=models.CASCADE)
     will_expire = models.NullBooleanField()
     valid_from = models.DateField()
     valid_to = models.DateField(blank=True, null=True)
     institution = models.ForeignKey('Institution', on_delete=models.CASCADE)
-    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    profile = models.ForeignKey('Profile', on_delete=models.CASCADE)
     created_date = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
@@ -132,7 +123,7 @@ class Project(models.Model):
     name = models.CharField(max_length=128, unique=True)
     url = models.URLField(blank=True, null=True)
     description = models.TextField(blank=True, null=True)
-    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    profile = models.ForeignKey('Profile', on_delete=models.CASCADE)
     created_date = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):

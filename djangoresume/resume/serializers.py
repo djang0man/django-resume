@@ -2,7 +2,7 @@ from django.contrib.auth.models import User, Group
 from rest_framework import serializers
 
 from resume.models import Skill, Company, Position, School, Program, Course,\
-                          Institution, Certification, Project, UserProfile
+                          Institution, Certification, Project, Profile
 
 
 class UserSerializer(serializers.HyperlinkedModelSerializer):
@@ -17,16 +17,16 @@ class GroupSerializer(serializers.HyperlinkedModelSerializer):
         fields = ('url', 'name')
 
 
-class UserProfileSerializer(serializers.HyperlinkedModelSerializer):
+class ProfileSerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
-        model = UserProfile
+        model = Profile
         fields = ('user', 'name', 'email', 'location', 'about')
 
 
 class SkillSerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
         model = Skill
-        fields = ('name', 'user')
+        fields = ('name', 'profile')
 
 
 class CompanySerializer(serializers.HyperlinkedModelSerializer):
