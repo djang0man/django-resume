@@ -20,6 +20,15 @@ class Profile(models.Model):
         return self.name
 
 
+class Website(models.Model):
+    name = models.CharField(max_length=128)
+    url = models.URLField()
+    profile = models.ForeignKey('Profile', on_delete=models.CASCADE)
+
+    def __str__(self):
+        return self.name
+
+
 class Skill(models.Model):
     name = models.CharField(max_length=128, unique=True)
     profile = models.ManyToManyField('Profile', related_name='skills')
@@ -86,7 +95,12 @@ class Course(models.Model):
     name = models.CharField(max_length=128)
     url = models.URLField(blank=True, null=True)
     description = models.TextField(blank=True, null=True)
-    program = models.ForeignKey('Program', on_delete=models.CASCADE)
+    program = models.ForeignKey(
+        'Program',
+        blank=True,
+        null=True,
+        on_delete=models.CASCADE
+    )
     profile = models.ManyToManyField('Profile', related_name='courses')
     created_date = models.DateTimeField(auto_now_add=True)
 

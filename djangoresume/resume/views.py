@@ -7,10 +7,11 @@ from rest_framework import viewsets
 from resume.serializers import UserSerializer, GroupSerializer,\
     SkillSerializer, CompanySerializer, PositionSerializer, SchoolSerializer,\
     ProgramSerializer, CourseSerializer, InstitutionSerializer,\
-    CertificationSerializer, ProjectSerializer, ProfileSerializer
+    CertificationSerializer, ProjectSerializer, ProfileSerializer,\
+    WebsiteSerializer
 
 from resume.models import Skill, Company, Position, School, Program, Course,\
-                          Institution, Certification, Project, Profile
+                          Institution, Certification, Project, Profile, Website
 
 
 class UserViewSet(viewsets.ModelViewSet):
@@ -35,6 +36,14 @@ class ProfileViewSet(viewsets.ModelViewSet):
     """
     queryset = Profile.objects.all()
     serializer_class = ProfileSerializer
+
+
+class WebsiteViewSet(viewsets.ModelViewSet):
+    """
+    API endpoint that allows groups to be viewed or edited.
+    """
+    queryset = Website.objects.all()
+    serializer_class = WebsiteSerializer
 
 
 class SkillViewSet(viewsets.ModelViewSet):
