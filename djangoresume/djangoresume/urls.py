@@ -37,6 +37,8 @@ router.register(r'projects', views.ProjectViewSet)
 
 urlpatterns = [
     path('admin/', admin.site.urls),
+    path('resume/<str:username>/',
+         views.resume_view, name='resume_detail'),
     url(r'^', include(router.urls)),
     url(r'^api-auth/',
         include('rest_framework.urls', namespace='rest_framework'))

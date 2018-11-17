@@ -2,6 +2,8 @@
 
 # Create your views here.
 
+from django.http import HttpResponse, Http404
+
 from django.contrib.auth.models import User, Group
 from rest_framework import viewsets
 from resume.serializers import UserSerializer, GroupSerializer,\
@@ -12,6 +14,21 @@ from resume.serializers import UserSerializer, GroupSerializer,\
 
 from resume.models import Skill, Company, Position, School, Program, Course,\
                           Institution, Certification, Project, Profile, Website
+
+
+def resume_view(request, username):
+    body = ''
+
+    try:
+        user = User.objects.all().get(username=username)
+    except User.DoesNotExist:
+        raise Http404
+
+    user_profile = Profile.objects.all().get(user__id=user.id)
+
+    body += ' {}'.format(user_profile.name)
+
+    return HttpResponse(body, content_type="text/plain")
 
 
 class UserViewSet(viewsets.ModelViewSet):
@@ -40,7 +57,7 @@ class ProfileViewSet(viewsets.ModelViewSet):
 
 class WebsiteViewSet(viewsets.ModelViewSet):
     """
-    API endpoint that allows groups to be viewed or edited.
+    API endpoint that allows websites to be viewed or edited.
     """
     queryset = Website.objects.all()
     serializer_class = WebsiteSerializer
@@ -48,7 +65,7 @@ class WebsiteViewSet(viewsets.ModelViewSet):
 
 class SkillViewSet(viewsets.ModelViewSet):
     """
-    API endpoint that allows groups to be viewed or edited.
+    API endpoint that allows skills to be viewed or edited.
     """
     queryset = Skill.objects.all()
     serializer_class = SkillSerializer
@@ -56,7 +73,7 @@ class SkillViewSet(viewsets.ModelViewSet):
 
 class CompanyViewSet(viewsets.ModelViewSet):
     """
-    API endpoint that allows groups to be viewed or edited.
+    API endpoint that allows companies to be viewed or edited.
     """
     queryset = Company.objects.all()
     serializer_class = CompanySerializer
@@ -64,7 +81,7 @@ class CompanyViewSet(viewsets.ModelViewSet):
 
 class PositionViewSet(viewsets.ModelViewSet):
     """
-    API endpoint that allows groups to be viewed or edited.
+    API endpoint that allows positions to be viewed or edited.
     """
     queryset = Position.objects.all()
     serializer_class = PositionSerializer
@@ -72,7 +89,7 @@ class PositionViewSet(viewsets.ModelViewSet):
 
 class SchoolViewSet(viewsets.ModelViewSet):
     """
-    API endpoint that allows groups to be viewed or edited.
+    API endpoint that allows schools to be viewed or edited.
     """
     queryset = School.objects.all()
     serializer_class = SchoolSerializer
@@ -80,7 +97,7 @@ class SchoolViewSet(viewsets.ModelViewSet):
 
 class ProgramViewSet(viewsets.ModelViewSet):
     """
-    API endpoint that allows groups to be viewed or edited.
+    API endpoint that allows programss to be viewed or edited.
     """
     queryset = Program.objects.all()
     serializer_class = ProgramSerializer
@@ -88,7 +105,7 @@ class ProgramViewSet(viewsets.ModelViewSet):
 
 class CourseViewSet(viewsets.ModelViewSet):
     """
-    API endpoint that allows groups to be viewed or edited.
+    API endpoint that allows courses to be viewed or edited.
     """
     queryset = Course.objects.all()
     serializer_class = CourseSerializer
@@ -96,7 +113,7 @@ class CourseViewSet(viewsets.ModelViewSet):
 
 class InstitutionViewSet(viewsets.ModelViewSet):
     """
-    API endpoint that allows groups to be viewed or edited.
+    API endpoint that allows institutions to be viewed or edited.
     """
     queryset = Institution.objects.all()
     serializer_class = InstitutionSerializer
@@ -112,7 +129,7 @@ class CertificationViewSet(viewsets.ModelViewSet):
 
 class ProjectViewSet(viewsets.ModelViewSet):
     """
-    API endpoint that allows groups to be viewed or edited.
+    API endpoint that allows projects to be viewed or edited.
     """
     queryset = Project.objects.all()
     serializer_class = ProjectSerializer
