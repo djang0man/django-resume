@@ -69,8 +69,8 @@ class Position(models.Model):
 
 class School(models.Model):
     name = models.CharField(max_length=128, unique=True)
-    url = models.URLField()
     location = models.CharField(max_length=128, blank=True, null=True)
+    url = models.URLField()
     order_id = models.PositiveIntegerField(default=1)
     profile = models.ManyToManyField('Profile', related_name='schools')
     created_date = models.DateTimeField(auto_now_add=True)
