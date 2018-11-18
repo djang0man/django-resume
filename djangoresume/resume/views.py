@@ -2,7 +2,7 @@
 
 # Create your views here.
 
-from django.http import HttpResponse, JsonResponse, Http404
+from django.http import JsonResponse, Http404
 
 from django.contrib.auth.models import User, Group
 from rest_framework import viewsets
@@ -27,6 +27,23 @@ def combine_companies_positions(companies, positions):
     return companies
 
 
+def combine_schools_programs_courses(schools, programs, courses):
+    for s in schools:
+        s.programs = list()
+
+        for p in programs:
+            if p.school_id == s.id:
+                s.programs.append(p)
+
+            p.courses = list()
+
+            for c in courses:
+                if c.program_id == p.id:
+                    p.courses.append(c)
+
+    return schools
+
+
 def resume_view(request, username):
     try:
         user = User.objects.all().get(username=username)
@@ -48,40 +65,80 @@ def resume_view(request, username):
         .order_by('start_date')\
         .reverse()
 
-    user_experience = combine_companies_positions(user_companies, user_positions)
+    user_experience = \
+        combine_companies_positions(user_companies, user_positions)
 
-    user_schools = School.objects.all().filter(profile__id=user_profile.id)
+    user_schools = School.objects.all()\
+        .filter(profile__id=user_profile.id)\
+        .order_by('order_id')
 
     user_programs = Program.objects.all().filter(profile__id=user_profile.id)
 
-    user_Courses = Program.objects.all().filter(profile__id=user_profile.id)
+    user_courses = Course.objects.all().filter(profile__id=user_profile.id)
+
+    user_education = \
+        combine_schools_programs_courses(
+            user_schools, user_programs, user_courses
+        )
 
     json_body = {
         'name': user_profile.name,
         'email': user_profile.email,
         'location': user_profile.location,
         'about': user_profile.about,
-        'websites': {
-            i: {
+        'websites': [
+            {
                 'name': w.name,
                 'url': w.url
-            } for i, w in enumerate(user_websites)
-        },
-        'skills': {
-            i: s.name for i, s in enumerate(user_skills)
-        },
+            } for w in user_websites
+        ],
+        'skills': [
+            s.name for s in user_skills
+        ],
         'experience': {
-            'companies': {
-                i: {
+            'companies': [
+                {
                     'name': c.name,
+                    'location': c.location,
                     'url': c.url,
-                    'positions': {
-                        i: {
-                            'title': p.title
-                        } for i, p in enumerate(c.positions)
-                    }
-                } for i, c in enumerate(user_experience)
-            }
+                    'positions': [
+                        {
+                            'title': p.title,
+                            'start_date': p.start_date,
+                            'end_date': p.end_date,
+                            'is_current': p.is_current,
+                            'description': p.description
+                        } for p in c.positions
+                    ]
+                } for c in user_experience
+            ]
+        },
+        'education': {
+            'schools': [
+                {
+                    'name': s.name,
+                    'location': s.location,
+                    'url': s.url,
+                    'programs': [
+                        {
+                            'name': p.name,
+                            'url': p.url,
+                            'degree': p.degree,
+                            'start_date': p.start_date,
+                            'end_date': p.end_date,
+                            'is_current': p.is_current,
+                            'description': p.description,
+                            'courses': [
+                                {
+                                    'name': c.name,
+                                    'url': c.url,
+                                    'description': c.description
+                                } for c in p.courses
+                            ]
+                        } for p in s.programs
+                    ]
+                } for s in user_education
+            ]
         }
     }
 
@@ -100,7 +157,7 @@ class GroupViewSet(viewsets.ModelViewSet):
     """
     API endpoint that allows groups to be viewed or edited.
     """
-    queryset = Group.objects.all()
+    queryset = Group.objects.get_queryset().order_by('id')
     serializer_class = GroupSerializer
 
 
@@ -108,7 +165,7 @@ class ProfileViewSet(viewsets.ModelViewSet):
     """
     API endpoint that allows groups to be viewed or edited.
     """
-    queryset = Profile.objects.all()
+    queryset = Profile.objects.get_queryset().order_by('id')
     serializer_class = ProfileSerializer
 
 
@@ -116,7 +173,7 @@ class WebsiteViewSet(viewsets.ModelViewSet):
     """
     API endpoint that allows websites to be viewed or edited.
     """
-    queryset = Website.objects.all()
+    queryset = Website.objects.get_queryset().order_by('id')
     serializer_class = WebsiteSerializer
 
 
@@ -124,7 +181,7 @@ class SkillViewSet(viewsets.ModelViewSet):
     """
     API endpoint that allows skills to be viewed or edited.
     """
-    queryset = Skill.objects.all()
+    queryset = Skill.objects.get_queryset().order_by('id')
     serializer_class = SkillSerializer
 
 
@@ -132,7 +189,7 @@ class CompanyViewSet(viewsets.ModelViewSet):
     """
     API endpoint that allows companies to be viewed or edited.
     """
-    queryset = Company.objects.all()
+    queryset = Company.objects.get_queryset().order_by('id')
     serializer_class = CompanySerializer
 
 
@@ -140,7 +197,7 @@ class PositionViewSet(viewsets.ModelViewSet):
     """
     API endpoint that allows positions to be viewed or edited.
     """
-    queryset = Position.objects.all()
+    queryset = Position.objects.get_queryset().order_by('id')
     serializer_class = PositionSerializer
 
 
@@ -148,7 +205,7 @@ class SchoolViewSet(viewsets.ModelViewSet):
     """
     API endpoint that allows schools to be viewed or edited.
     """
-    queryset = School.objects.all()
+    queryset = School.objects.get_queryset().order_by('id')
     serializer_class = SchoolSerializer
 
 
@@ -156,7 +213,7 @@ class ProgramViewSet(viewsets.ModelViewSet):
     """
     API endpoint that allows programss to be viewed or edited.
     """
-    queryset = Program.objects.all()
+    queryset = Program.objects.get_queryset().order_by('id')
     serializer_class = ProgramSerializer
 
 
@@ -164,7 +221,7 @@ class CourseViewSet(viewsets.ModelViewSet):
     """
     API endpoint that allows courses to be viewed or edited.
     """
-    queryset = Course.objects.all()
+    queryset = Course.objects.get_queryset().order_by('id')
     serializer_class = CourseSerializer
 
 
@@ -172,7 +229,7 @@ class InstitutionViewSet(viewsets.ModelViewSet):
     """
     API endpoint that allows institutions to be viewed or edited.
     """
-    queryset = Institution.objects.all()
+    queryset = Institution.objects.get_queryset().order_by('id')
     serializer_class = InstitutionSerializer
 
 
@@ -180,7 +237,7 @@ class CertificationViewSet(viewsets.ModelViewSet):
     """
     API endpoint that allows groups to be viewed or edited.
     """
-    queryset = Certification.objects.all()
+    queryset = Certification.objects.get_queryset().order_by('id')
     serializer_class = CertificationSerializer
 
 
@@ -188,5 +245,5 @@ class ProjectViewSet(viewsets.ModelViewSet):
     """
     API endpoint that allows projects to be viewed or edited.
     """
-    queryset = Project.objects.all()
+    queryset = Project.objects.get_queryset().order_by('id')
     serializer_class = ProjectSerializer
