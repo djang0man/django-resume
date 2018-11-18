@@ -41,7 +41,7 @@ def resume_view(request, username):
 
     user_companies = Company.objects.all()\
         .filter(profile__id=user_profile.id)\
-        .order_by('position', 'position__start_date')
+        .order_by('order_id')
 
     user_positions = Position.objects.all()\
         .filter(profile__id=user_profile.id)\

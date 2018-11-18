@@ -38,7 +38,7 @@ class SkillSerializer(serializers.HyperlinkedModelSerializer):
 class CompanySerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
         model = Company
-        fields = ('name', 'url')
+        fields = ('name', 'url', 'order_id')
 
 
 class PositionSerializer(serializers.HyperlinkedModelSerializer):
