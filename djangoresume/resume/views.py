@@ -43,7 +43,9 @@ def resume_view(request, username):
         'email': user_profile.email,
         'location': user_profile.location,
         'about': user_profile.about,
-        'links': {ind: {i.name: i.url} for ind, i in enumerate(user_websites)},
+        'links': {
+            ind: {'name': i.name, 'url': i.url}
+            for ind, i in enumerate(user_websites)},
         'skills': {ind: i.name for ind, i in enumerate(user_skills)}
     }
 
