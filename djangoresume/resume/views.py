@@ -2,7 +2,7 @@
 
 # Create your views here.
 
-from django.http import HttpResponse, JsonResponse, Http404 
+from django.http import HttpResponse, JsonResponse, Http404
 
 from django.contrib.auth.models import User, Group
 from rest_framework import viewsets
@@ -14,6 +14,17 @@ from resume.serializers import UserSerializer, GroupSerializer,\
 
 from resume.models import Skill, Company, Position, School, Program, Course,\
                           Institution, Certification, Project, Profile, Website
+
+
+def combine_companies_positions(companies, positions):
+    for c in companies:
+        c.positions = list()
+
+        for p in positions:
+            if p.company_id == c.id:
+                c.positions.append(p)
+
+    return companies
 
 
 def resume_view(request, username):
@@ -28,9 +39,16 @@ def resume_view(request, username):
 
     user_skills = Skill.objects.all().filter(profile__id=user_profile.id)
 
-    user_companies = Company.objects.all().filter(profile__id=user_profile.id)
+    user_companies = Company.objects.all()\
+        .filter(profile__id=user_profile.id)\
+        .order_by('position', 'position__start_date')
 
-    user_positions = Position.objects.all().filter(profile__id=user_profile.id)
+    user_positions = Position.objects.all()\
+        .filter(profile__id=user_profile.id)\
+        .order_by('start_date')\
+        .reverse()
+
+    user_experience = combine_companies_positions(user_companies, user_positions)
 
     user_schools = School.objects.all().filter(profile__id=user_profile.id)
 
@@ -43,10 +61,28 @@ def resume_view(request, username):
         'email': user_profile.email,
         'location': user_profile.location,
         'about': user_profile.about,
-        'links': {
-            ind: {'name': i.name, 'url': i.url}
-            for ind, i in enumerate(user_websites)},
-        'skills': {ind: i.name for ind, i in enumerate(user_skills)}
+        'websites': {
+            i: {
+                'name': w.name,
+                'url': w.url
+            } for i, w in enumerate(user_websites)
+        },
+        'skills': {
+            i: s.name for i, s in enumerate(user_skills)
+        },
+        'experience': {
+            'companies': {
+                i: {
+                    'name': c.name,
+                    'url': c.url,
+                    'positions': {
+                        i: {
+                            'title': p.title
+                        } for i, p in enumerate(c.positions)
+                    }
+                } for i, c in enumerate(user_experience)
+            }
+        }
     }
 
     return JsonResponse(json_body)
