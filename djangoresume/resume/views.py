@@ -2,7 +2,7 @@
 
 # Create your views here.
 
-from django.http import HttpResponse, Http404
+from django.http import HttpResponse, JsonResponse, Http404 
 
 from django.contrib.auth.models import User, Group
 from rest_framework import viewsets
@@ -17,8 +17,6 @@ from resume.models import Skill, Company, Position, School, Program, Course,\
 
 
 def resume_view(request, username):
-    body = ''
-
     try:
         user = User.objects.all().get(username=username)
     except User.DoesNotExist:
@@ -26,9 +24,30 @@ def resume_view(request, username):
 
     user_profile = Profile.objects.all().get(user__id=user.id)
 
-    body += ' {}'.format(user_profile.name)
+    user_websites = Website.objects.all().filter(profile__id=user_profile.id)
 
-    return HttpResponse(body, content_type="text/plain")
+    user_skills = Skill.objects.all().filter(profile__id=user_profile.id)
+
+    user_companies = Company.objects.all().filter(profile__id=user_profile.id)
+
+    user_positions = Position.objects.all().filter(profile__id=user_profile.id)
+
+    user_schools = School.objects.all().filter(profile__id=user_profile.id)
+
+    user_programs = Program.objects.all().filter(profile__id=user_profile.id)
+
+    user_Courses = Program.objects.all().filter(profile__id=user_profile.id)
+
+    json_body = {
+        'name': user_profile.name,
+        'email': user_profile.email,
+        'location': user_profile.location,
+        'about': user_profile.about,
+        'links': {ind: {i.name: i.url} for ind, i in enumerate(user_websites)},
+        'skills': {ind: i.name for ind, i in enumerate(user_skills)}
+    }
+
+    return JsonResponse(json_body)
 
 
 class UserViewSet(viewsets.ModelViewSet):
