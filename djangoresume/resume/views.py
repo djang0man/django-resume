@@ -44,6 +44,10 @@ def combine_schools_programs_courses(schools, programs, courses):
     return schools
 
 
+def home_page_view(request):
+    return resume_view(request, 'stuartdkershaw')
+
+
 def resume_view(request, username):
     try:
         user = User.objects.all().get(username=username)
