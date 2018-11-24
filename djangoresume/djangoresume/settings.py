@@ -56,7 +56,7 @@ ROOT_URLCONF = 'djangoresume.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': [os.path.join(BASE_DIR, 'djangoresume/templates')],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [

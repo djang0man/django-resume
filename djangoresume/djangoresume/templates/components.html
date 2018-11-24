@@ -1,0 +1,101 @@
+{% extends "base.html" %}
+{% block head %}
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <title>{{name}} | {{about}} | {{location}}</title>
+    <meta name="description" content="{{name}}, {{about}}, {{location}}">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="format-detection" content="telephone=no">
+  </head>
+{% endblock %}
+{% block details %}
+    <header id="name">
+      <h1 id="author">{{name}}</h1>
+    </header>
+    <div id="contact">
+      <div id="address">
+        <p>{{about}}</p>
+        <p>{{location}}</p>
+        {% if websites %}
+        <ul>
+          {% if email %}
+            <li><a href="mailto:{{email}}">Email</a></li>
+          {% endif %}
+          {% for website in websites %}
+          <li>
+            <a href="{{website.url}}" target="_blank">{{website.name}}</a>
+          </li>
+          {% endfor %}
+        </ul>
+        {% endif %}
+      </div>
+    </div>      
+{% endblock %}
+{% block skills %}
+    <article id="skills" class="tab-content">
+      <header>
+        <h2>Skills</h2>
+      </header>
+      {% if skills %}
+      <ul>
+        {% for skill in skills %}
+        <li>{{skill}}</li>
+        {% endfor %}
+      </ul>
+      {% endif %}
+    </article>
+{% endblock %}
+{% block experience %}
+    <article id="experience" class="tab-content">
+      <header>
+        <h2>Experience</h2>
+      </header>
+      {% for company in experience.companies %}
+      <section>
+        <h3>
+          <a href="{{company.url}}" target="_blank">{{company.name}}</a>
+        </h3>
+        {% for position in company.positions %}
+        <section>
+          <h4>{{position.title}}</h4>
+          <em>{{position.start_date}} - {% if position.end_date %}{{position.end_date}}{% elif position.is_current %}current{% endif %}</em>
+          {{position.description}}
+        </section>
+        {% endfor %}
+      </section>
+      {% endfor %}
+    </article>
+{% endblock %}
+{% block education %}
+    <article id="education" class="tab-content">
+      <header>
+        <h2>Education</h2>
+      </header>
+      {% for school in education.schools %}
+      <section>
+        <h3>
+          <a href="{{school.url}}" target="_blank">{{school.name}}</a>
+        </h3>
+        {% for program in school.programs %}
+        <section>
+          {% if program.name %}
+          <h4>
+            <a href="{{program.url}}" target="_blank">{{program.name}}</a>
+          </h4>
+          {% endif %}
+          <em>{{program.start_date}} - {% if program.end_date %}{{program.end_date}}{% elif program.is_current %}current{% endif %}</em>
+          {% if program.courses %}
+          <ul>
+            {% for course in program.courses %}
+            <li>
+              <a href="{{course.url}}" target="_blank">{{course.name}}</a>
+            </li>
+            {% endfor %}
+          </ul>
+          {% endif %}
+        </section>
+        {% endfor %}
+      </section>
+      {% endfor %}
+    </article>
+{% endblock %}

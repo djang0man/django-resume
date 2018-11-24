@@ -2,6 +2,8 @@
 
 # Create your views here.
 
+from django.shortcuts import render
+
 from django.http import JsonResponse, Http404
 
 from django.contrib.auth.models import User, Group
@@ -45,10 +47,17 @@ def combine_schools_programs_courses(schools, programs, courses):
 
 
 def home_page_view(request):
-    return resume_view(request, 'stuartdkershaw')
+    user = 'stuartdkershaw'
+    json_body = get_resume_json(user)
+    return JsonResponse(json_body)
 
 
-def resume_view(request, username):
+def resume_page_view(request, username):
+    json_body = get_resume_json(username)
+    return render(request, 'components.html', json_body)
+
+
+def get_resume_json(username):
     try:
         user = User.objects.all().get(username=username)
     except User.DoesNotExist:
@@ -146,7 +155,7 @@ def resume_view(request, username):
         }
     }
 
-    return JsonResponse(json_body)
+    return json_body
 
 
 class UserViewSet(viewsets.ModelViewSet):

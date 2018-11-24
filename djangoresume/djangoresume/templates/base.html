@@ -1,0 +1,15 @@
+{% load staticfiles %}
+<!DOCTYPE html>
+<html lang="en">
+  {% block head %}{% endblock %}
+  <body>
+		<main>
+      <section>
+        {% block details %}{% endblock %}
+        {% block skills %}{% endblock %}
+        {% block experience %}{% endblock %}
+        {% block education %}{% endblock %}
+      </section>
+    </main>
+  </body>
+</html>
