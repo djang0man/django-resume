@@ -1,4 +1,5 @@
 {% extends "base.html" %}
+{% load static %}
 {% block head %}
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
@@ -6,14 +7,15 @@
     <meta name="description" content="{{name}}, {{about}}, {{location}}">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="format-detection" content="telephone=no">
+    <link type="text/css" rel="stylesheet" href="{% static 'screen.css' %}">
   </head>
 {% endblock %}
 {% block details %}
     <header id="name">
-      <h1 id="author">{{name}}</h1>
+      <h1>{{name}}</h1>
     </header>
-    <div id="contact">
-      <div id="address">
+    <div id="about">
+      <div>
         <p>{{about}}</p>
         <p>{{location}}</p>
         {% if websites %}
@@ -32,7 +34,7 @@
     </div>      
 {% endblock %}
 {% block skills %}
-    <article id="skills" class="tab-content">
+    <article id="skills">
       <header>
         <h2>Skills</h2>
       </header>
@@ -46,7 +48,7 @@
     </article>
 {% endblock %}
 {% block experience %}
-    <article id="experience" class="tab-content">
+    <article id="experience">
       <header>
         <h2>Experience</h2>
       </header>
@@ -67,7 +69,7 @@
     </article>
 {% endblock %}
 {% block education %}
-    <article id="education" class="tab-content">
+    <article id="education">
       <header>
         <h2>Education</h2>
       </header>

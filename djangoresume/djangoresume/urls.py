@@ -37,7 +37,7 @@ router.register(r'projects', views.ProjectViewSet)
 
 urlpatterns = [
     path('', views.resume_get_api, name='resume_get_api'),
-    path('resume/<str:username>/',
+    path('resume/',
          views.resume_template_view, name='resume_template_view'),
     path('admin/', admin.site.urls),
     url(r'^api/', include(router.urls)),

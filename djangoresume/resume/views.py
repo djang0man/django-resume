@@ -24,8 +24,9 @@ def resume_get_api(request):
     return JsonResponse(json_body)
 
 
-def resume_template_view(request, username):
-    json_body = get_resume_json(username)
+def resume_template_view(request):
+    user = 'stuartdkershaw'
+    json_body = get_resume_json(user)
     return render(request, 'components.html', json_body)
 
 
