@@ -56,7 +56,7 @@
             <section>
               <h4>{{position.title}}</h4>
               <em>{{position.start_date}} - {% if position.end_date %}{{position.end_date}}{% elif position.is_current %}current{% endif %}</em>
-              {{position.description}}
+              {{position.description|linebreaks}}
             </section>
             {% endfor %}
           </section>
