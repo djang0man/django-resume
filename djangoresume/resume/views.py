@@ -18,7 +18,7 @@ from resume.models import Skill, Company, Position, School, Program, Course,\
                           Institution, Certification, Project, Profile, Website
 
 
-def resume_get_api(request):
+def resume_get_json(request):
     user = 'stuartdkershaw'
     json_body = get_resume_json(user)
     return JsonResponse(json_body)
