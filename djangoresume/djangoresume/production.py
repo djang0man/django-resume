@@ -3,16 +3,6 @@ import os
 from .settings import *
 
 
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'resume',
-        'USER': 'stuartdkershaw',
-        'PASSWORD': 'honeywellZima800',
-        'HOST': 'django.ceynhz03xnah.us-west-2.rds.amazonaws.com',
-        'PORT': '5432',
-    }
-}
 DEBUG = False
 TEMPLATE_DEBUG = False
 SECURE_SSL_HOST = True
