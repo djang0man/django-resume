@@ -18,6 +18,17 @@ from resume.models import Skill, Company, Position, School, Program, Course,\
                           Institution, Certification, Project, Profile, Website
 
 
+def resume_get_api(request):
+    user = 'stuartdkershaw'
+    json_body = get_resume_json(user)
+    return JsonResponse(json_body)
+
+
+def resume_template_view(request, username):
+    json_body = get_resume_json(username)
+    return render(request, 'components.html', json_body)
+
+
 def combine_companies_positions(companies, positions):
     for c in companies:
         c.positions = list()
@@ -44,17 +55,6 @@ def combine_schools_programs_courses(schools, programs, courses):
                     p.courses.append(c)
 
     return schools
-
-
-def home_page_view(request):
-    user = 'stuartdkershaw'
-    json_body = get_resume_json(user)
-    return JsonResponse(json_body)
-
-
-def resume_page_view(request, username):
-    json_body = get_resume_json(username)
-    return render(request, 'components.html', json_body)
 
 
 def get_resume_json(username):

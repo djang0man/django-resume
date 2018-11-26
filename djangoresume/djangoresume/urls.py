@@ -36,10 +36,10 @@ router.register(r'certifications', views.CertificationViewSet)
 router.register(r'projects', views.ProjectViewSet)
 
 urlpatterns = [
-    path('admin/', admin.site.urls),
+    path('', views.resume_get_api, name='resume_get_api'),
     path('resume/<str:username>/',
-         views.resume_page_view, name='resume_detail'),
-    path('', views.home_page_view, name='resume_home'),
+         views.resume_template_view, name='resume_template_view'),
+    path('admin/', admin.site.urls),
     url(r'^api/', include(router.urls)),
     url(r'^api-auth/',
         include('rest_framework.urls', namespace='rest_framework'))
