@@ -1,0 +1,212 @@
+html, body, div, span, applet, object, iframe,
+h1, h2, h3, h4, h5, h6, p, blockquote, pre,
+a, abbr, acronym, address, big, cite, code,
+del, dfn, em, img, ins, kbd, q, s, samp,
+small, strike, strong, sub, sup, tt, var,
+b, u, i, center,
+dl, dt, dd, ol, ul, li,
+fieldset, form, label, legend,
+table, caption, tbody, tfoot, thead, tr, th, td,
+article, aside, canvas, details, embed,
+figure, figcaption, footer, header, hgroup,
+menu, nav, output, ruby, section, summary,
+time, mark, audio, video {
+  margin: 0;
+  padding: 0;
+  border: 0;
+  font: inherit;
+  font-size: 100%;
+  vertical-align: baseline;
+}
+
+html {
+  line-height: 1;
+}
+
+ol, ul {
+  list-style: none;
+}
+
+table {
+  border-collapse: collapse;
+  border-spacing: 0;
+}
+
+caption, th, td {
+  text-align: left;
+  font-weight: normal;
+  vertical-align: middle;
+}
+
+q, blockquote {
+  quotes: none;
+}
+
+q:before, q:after, blockquote:before, blockquote:after {
+  content: "";
+  content: none;
+}
+
+a img {
+  border: none;
+}
+
+article, aside, details, figcaption, figure, footer, header, hgroup, main, menu, nav, section, summary {
+  display: block;
+}
+
+html {
+  font-size: 100%;
+  line-height: 1.5em;
+}
+
+html {
+  color: #444;
+  font-family: "arial";
+}
+
+main {
+  margin-bottom: 1.5em;
+}
+
+article > em {
+  margin-bottom: 0.75em;
+}
+
+article, #about {
+  padding: 0 1.5em;
+}
+
+article {
+  padding-bottom: 0.75em;
+}
+
+h1 {
+  font-weight: 700;
+  font-size: 3em;
+  line-height: 1.5em;
+  margin-top: 0.5em;
+  margin-bottom: 0.25em;
+}
+@media screen and (min-width: 1024px) {
+  h1 {
+    margin-top: 0.25em;
+    margin-bottom: 0.25em;
+  }
+}
+
+h2 {
+  font-weight: 700;
+  font-size: 3em;
+  line-height: 1.5em;
+  border-top-width: 0.04167em;
+  border-top-style: solid;
+  padding-top: 0.20833em;
+  border-bottom-width: 0.02083em;
+  border-bottom-style: solid;
+  padding-bottom: 0.22917em;
+  margin-top: 0.5em;
+  margin-bottom: 0.5em;
+}
+
+h3 {
+  font-weight: 700;
+  font-size: 2em;
+  line-height: 1.5em;
+  margin-top: 0.75em;
+}
+
+h4 {
+  font-style: italic;
+  font-weight: 700;
+  font-size: 1.5em;
+  line-height: 2em;
+  margin-top: 0.5em;
+  margin-bottom: 0em;
+}
+
+a {
+  color: #444;
+  padding: 0 .25em;
+  text-decoration: underline;
+}
+
+em {
+  display: block;
+  margin-top: 0.75em;
+}
+
+ul {
+  display: inline-block;
+  list-style: disc;
+  padding-left: 1.5em;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+ul li {
+  margin-top: 0.75em;
+}
+
+.alt {
+  opacity: 0;
+  visibility: hidden;
+  position: absolute;
+  left: -9999px;
+}
+
+#name, #about {
+  text-align: center;
+}
+
+#about ul {
+  padding: 0;
+}
+
+#about ul li {
+  display: inline-block;
+}
+
+@media only screen and (min-width: 480px) {
+  #skills ul {
+    list-style: none;
+    padding-left: 0;
+  }
+}
+#skills ul li {
+  margin-top: 0.75em;
+}
+@media only screen and (min-width: 480px) {
+  #skills ul li {
+    display: inline-block;
+  }
+  #skills ul li:not(:last-child):after {
+    content: ', ';
+  }
+}
+
+#experience ul {
+  margin-top: 0.75em;
+}
+@media screen and (min-width: 1024px) {
+  #experience ul {
+    margin-top: 0;
+  }
+}
+
+#education h2, #awards h2 {
+  margin-top: 0.75em;
+}
+@media screen and (min-width: 1024px) {
+  #education h2, #awards h2 {
+    margin-top: 0.5em;
+  }
+}
+#education ul, #awards ul {
+  margin-bottom: 0.75em;
+}
+@media screen and (min-width: 1024px) {
+  #education section:last-child ul, #awards section:last-child ul {
+    margin-bottom: 0;
+  }
+}
