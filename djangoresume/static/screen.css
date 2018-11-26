@@ -167,6 +167,10 @@ ul li {
   display: inline-block;
 }
 
+#experience p {
+  margin-top: 0.75em;
+}
+
 @media only screen and (min-width: 480px) {
   #skills ul {
     list-style: none;
