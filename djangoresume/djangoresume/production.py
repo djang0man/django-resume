@@ -1,15 +1,18 @@
 import os
 
-import dj_database_url
-
 from .settings import *
 
 
 DATABASES = {
-    'default': dj_database_url.config(
-        default=os.environ.get('DATABASE_URL'))
+    'default': {
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': 'resume',
+        'USER': 'stuartdkershaw',
+        'PASSWORD': 'honeywellZima800',
+        'HOST': 'django.ceynhz03xnah.us-west-2.rds.amazonaws.com',
+        'PORT': '5432',
     }
-
+}
 DEBUG = False
 TEMPLATE_DEBUG = False
 SECURE_SSL_HOST = True
