@@ -74,7 +74,7 @@
             {% for program in school.programs %}
             <section>
               {% if program.name %}
-              <h4><a href="{{program.url}}" target="_blank">{{program.name}}</a></h4>
+              <h4><a href="{{program.url}}" target="_blank">{{program.degree}}, {{program.name}}</a></h4>
               {% endif %}
               <em>{{program.start_date}} - {% if program.end_date %}{{program.end_date}}{% elif program.is_current %}current{% endif %}</em>
               {% if program.courses %}
