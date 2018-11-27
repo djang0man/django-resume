@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+{% load static %}
+{% block head %}
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <title>Login</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="format-detection" content="telephone=no">
+    <link type="text/css" rel="stylesheet" href="{% static 'screen.css' %}">
+  </head>
+{% endblock %}
+    {% block login %}
+    <article>
+      <h1>Login</h1>
+      <form action="" method="POST">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <input type="hidden" name="next" value="{% url 'home' %}">
+        <p><input type="submit" value="Log In"></p>
+      </form>
+    </article>
+    {% endblock %}
