@@ -15,7 +15,10 @@ Including another URLconf
 """
 from django.urls import path
 from django.contrib import admin
-from django.contrib.auth.views import LoginView, LogoutView
+from django.contrib.auth.views import LoginView, LogoutView,\
+                                PasswordChangeView, PasswordChangeDoneView
+# PasswordResetView, PasswordResetDoneView,\
+# PasswordResetConfirmView
 
 from django.conf.urls import url, include
 from rest_framework import routers
@@ -49,6 +52,19 @@ urlpatterns = [
 
     path('logout/',
          LogoutView.as_view(next_page='/'), name="logout"),
+
+    path('change-password/', PasswordChangeView.as_view()),
+
+    path('change-password-success/',
+         PasswordChangeDoneView.as_view(), name='password_change_done'),
+
+    # path('reset-password/', PasswordResetView.as_view()),
+
+    # path('reset-password-success/',
+    #      PasswordResetDoneView.as_view(), name='password_reset_complete'),
+
+    # path('reset-password-confirm/<uidb64>/<token>/',
+    #      PasswordResetConfirmView.as_view(), name='password_reset_confirm'),
 
     url(r'^api/', include(router.urls)),
 
