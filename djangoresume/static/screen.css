@@ -127,7 +127,6 @@ h4 {
 
 a {
   color: #444;
-  padding: 0 .25em;
   text-decoration: underline;
 }
 
@@ -157,6 +156,10 @@ ul li {
 
 #name, #about {
   text-align: center;
+}
+
+#about a {
+  padding: 0 .25em;
 }
 
 #about ul {
