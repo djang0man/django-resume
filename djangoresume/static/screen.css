@@ -147,6 +147,11 @@ ul li {
   margin-top: 0.75em;
 }
 
+form label {
+  width: 100px;
+  display: inline-block;
+}
+
 .alt {
   opacity: 0;
   visibility: hidden;
