@@ -68,7 +68,9 @@ def get_resume_json(username):
 
     user_websites = Website.objects.all().filter(profile__id=user_profile.id)
 
-    user_skills = Skill.objects.all().filter(profile__id=user_profile.id)
+    user_skills = Skill.objects.all()\
+                  .filter(profile__id=user_profile.id)\
+                  .order_by('order_id')
 
     user_companies = Company.objects.all()\
         .filter(profile__id=user_profile.id)\

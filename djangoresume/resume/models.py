@@ -31,6 +31,7 @@ class Website(models.Model):
 
 class Skill(models.Model):
     name = models.CharField(max_length=128, unique=True)
+    order_id = models.PositiveIntegerField(default=1)
     profile = models.ManyToManyField('Profile', related_name='skills')
     created_date = models.DateTimeField(auto_now_add=True)
 
