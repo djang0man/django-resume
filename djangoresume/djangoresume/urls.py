@@ -22,6 +22,7 @@ from django.contrib.auth.views import LoginView, LogoutView,\
 
 from django.conf.urls import url, include
 from rest_framework import routers
+from rest_framework.authtoken import views as api_views
 from resume import views
 
 router = routers.DefaultRouter()
@@ -69,5 +70,7 @@ urlpatterns = [
     url(r'^api/', include(router.urls)),
 
     url(r'^api-auth/',
-        include('rest_framework.urls', namespace='rest_framework'))
+        include('rest_framework.urls', namespace='rest_framework')),
+
+    url(r'^api-token-auth/', api_views.obtain_auth_token)
 ]
