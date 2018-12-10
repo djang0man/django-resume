@@ -180,20 +180,20 @@ form label {
 }
 
 @media only screen and (min-width: 480px) {
-  #skills ul {
+  #interests ul {
     list-style: none;
     padding-left: 0;
   }
 }
-#skills ul li {
+#interests ul li {
   margin-top: 0.75em;
 }
 @media only screen and (min-width: 480px) {
-  #skills ul li {
+  #interests ul li {
     display: inline-block;
     margin-right: 0.25em;
   }
-  #skills ul li:not(:last-child):after {
+  #interests ul li:not(:last-child):after {
     content: ', ';
   }
 }
