@@ -1,5 +1,6 @@
 {% extends "base.html" %}
 {% load static %}
+
 {% block head %}
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
@@ -9,13 +10,15 @@
     <link type="text/css" rel="stylesheet" href="{% static 'screen.css' %}">
   </head>
 {% endblock %}
-    {% block login %}
-    <article>
-      <h1>Login</h1>
-      <form action="" method="POST">
-        {% csrf_token %}
-        {{ form.as_p }}
-        <p><input type="submit" value="Login"></p>
-      </form>
-    </article>
-    {% endblock %}
+
+{% block login %}
+<article>
+  <h1>Login</h1>
+  <form action="" method="POST">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <p><input type="submit" value="Login"></p>
+  </form>
+</article>
+{% endblock %}
+
