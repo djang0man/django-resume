@@ -23,8 +23,9 @@
       {% if websites %}
       <ul>
         {% if email %}
-        <li><a href="mailto:{{email}}">Email</a></li>{% endif %}
-        {% for website in websites|dictsort:"name" %}
+        <li><a href="mailto:{{email}}">Email</a></li>
+        {% endif %}
+        {% for website in websites %}
         <li><a href="{{website.url}}" target="_blank">{{website.name}}</a></li>
         {% endfor %}
       </ul>
