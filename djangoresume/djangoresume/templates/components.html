@@ -1,5 +1,6 @@
 {% extends "base.html" %}
 {% load static %}
+{% load position_desc_formatted %}
 
 {% block head %}
   <head>
@@ -62,7 +63,9 @@
       <section>
         <h4>{{position.title}}</h4>
         <em>{{position.start_date}} - {% if position.end_date %}{{position.end_date}}{% elif position.is_current %}Current{% endif %}</em>
-        {{position.description|linebreaks}}
+        {% if position.description %}
+        {{position.description|position_desc_formatted}}
+        {% endif %}
       </section>
       {% endfor %}
     </section>
