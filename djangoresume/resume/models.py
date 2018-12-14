@@ -29,7 +29,7 @@ class Website(models.Model):
         return self.name
 
 
-class Skill(models.Model):
+class Interest(models.Model):
     name = models.CharField(max_length=128, unique=True)
     order_id = models.PositiveIntegerField(default=1)
     profile = models.ManyToManyField('Profile', related_name='skills')

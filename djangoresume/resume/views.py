@@ -9,13 +9,14 @@ from django.http import JsonResponse, Http404
 from django.contrib.auth.models import User, Group
 from rest_framework import viewsets
 from resume.serializers import UserSerializer, GroupSerializer,\
-    SkillSerializer, CompanySerializer, PositionSerializer, SchoolSerializer,\
-    ProgramSerializer, CourseSerializer, InstitutionSerializer,\
-    CertificationSerializer, ProjectSerializer, ProfileSerializer,\
-    WebsiteSerializer
+    InterestSerializer, CompanySerializer, PositionSerializer,\
+    SchoolSerializer, ProgramSerializer, CourseSerializer,\
+    InstitutionSerializer, CertificationSerializer, ProjectSerializer,\
+    ProfileSerializer, WebsiteSerializer
 
-from resume.models import Skill, Company, Position, School, Program, Course,\
-                          Institution, Certification, Project, Profile, Website
+from resume.models import Interest, Company, Position, School, Program,\
+                          Course, Institution, Certification, Project,\
+                          Profile, Website
 
 
 def resume_get_json(request):
@@ -68,9 +69,9 @@ def get_resume_json(username):
 
     user_websites = Website.objects.all().filter(profile__id=user_profile.id)
 
-    user_skills = Skill.objects.all()\
-                  .filter(profile__id=user_profile.id)\
-                  .order_by('order_id')
+    user_interests = Interest.objects.all()\
+        .filter(profile__id=user_profile.id)\
+        .order_by('order_id')
 
     user_companies = Company.objects.all()\
         .filter(profile__id=user_profile.id)\
@@ -108,8 +109,8 @@ def get_resume_json(username):
                 'url': w.url
             } for w in user_websites
         ],
-        'skills': [
-            s.name for s in user_skills
+        'interests': [
+            s.name for s in user_interests
         ],
         'experience': {
             'companies': [
@@ -193,12 +194,12 @@ class WebsiteViewSet(viewsets.ModelViewSet):
     serializer_class = WebsiteSerializer
 
 
-class SkillViewSet(viewsets.ModelViewSet):
+class InterestViewSet(viewsets.ModelViewSet):
     """
     API endpoint that allows skills to be viewed or edited.
     """
-    queryset = Skill.objects.get_queryset().order_by('id')
-    serializer_class = SkillSerializer
+    queryset = Interest.objects.get_queryset().order_by('id')
+    serializer_class = InterestSerializer
 
 
 class CompanyViewSet(viewsets.ModelViewSet):
