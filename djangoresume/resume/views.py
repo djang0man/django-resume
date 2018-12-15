@@ -2,6 +2,8 @@
 
 # Create your views here.
 
+import datetime
+
 from django.shortcuts import render
 
 from django.http import JsonResponse, Http404
@@ -57,6 +59,17 @@ def combine_schools_programs_courses(schools, programs, courses):
                     p.courses.append(c)
 
     return schools
+
+
+def get_position_duration(start_date, end_date=None, is_current=False):
+    if is_current:
+        until_date = datetime.datetime.now()
+    elif end_date is not None:
+        until_date = datetime.datetime.strptime(str(end_date), '%Y-%m-%d')
+
+    begin_date = datetime.datetime.strptime(str(start_date), '%Y-%m-%d')
+
+    return str(until_date-begin_date).split(',')[0]
 
 
 def get_resume_json(username):
@@ -124,6 +137,7 @@ def get_resume_json(username):
                             'start_date': p.start_date,
                             'end_date': p.end_date,
                             'is_current': p.is_current,
+                            'duration': get_position_duration(p.start_date, p.end_date, p.is_current),
                             'description': p.description
                         } for p in c.positions
                     ]
