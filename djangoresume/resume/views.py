@@ -3,6 +3,7 @@
 # Create your views here.
 
 import datetime
+from dateutil import relativedelta
 
 from django.shortcuts import render
 
@@ -69,7 +70,9 @@ def get_position_duration(start_date, end_date=None, is_current=False):
 
     begin_date = datetime.datetime.strptime(str(start_date), '%Y-%m-%d')
 
-    return str(until_date-begin_date).split(',')[0]
+    delta = relativedelta.relativedelta(until_date, begin_date)
+
+    return '{} yrs {} mos'.format(delta.years, delta.months)
 
 
 def get_resume_json(username):

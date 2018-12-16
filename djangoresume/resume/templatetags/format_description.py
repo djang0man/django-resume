@@ -5,7 +5,7 @@ register = template.Library()
 
 
 @register.filter(name='format_description', needs_autoescape=True)
-def position_desc_formatted(value, autoescape=True):
+def format_description(value, autoescape=True):
     split_desc = value.split('\r\n')
     list_desc = ['<li>' + d + '</li>' for d in split_desc]
 
