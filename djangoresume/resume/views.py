@@ -72,7 +72,15 @@ def get_position_duration(start_date, end_date=None, is_current=False):
 
     delta = relativedelta.relativedelta(until_date, begin_date)
 
-    return '{} yrs {} mos'.format(delta.years, delta.months)
+    duration_string = ''
+
+    if delta.years != 0:
+        duration_string += '{} yrs '.format(delta.years)
+
+    if delta.months != 0:
+        duration_string += '{} mos'.format(delta.months)
+
+    return duration_string
 
 
 def get_resume_json(username):
