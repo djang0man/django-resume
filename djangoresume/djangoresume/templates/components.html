@@ -89,13 +89,6 @@
         <h4><a href="{{program.url}}" target="_blank">{{program.degree}}, {{program.name}}</a></h4>
         {% endif %}
         <em>{{program.start_date|date:"Y"}}{% if program.end_date and program.start_date != program.end_date %} - {{program.end_date|date:"Y"}}{% elif program.is_current %}current{% endif %}</em>
-        {% if program.courses %}
-        <ul>
-          {% for course in program.courses %}
-          <li><a href="{{course.url}}" target="_blank">{{course.name}}</a></li>
-          {% endfor %}
-        </ul>
-        {% endif %}
       </section>
       {% endfor %}
     </section>
