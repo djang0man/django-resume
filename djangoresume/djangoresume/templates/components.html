@@ -62,7 +62,7 @@
       {% for position in company.positions %}
       <section>
         <h4>{{position.title}}</h4>
-        <em>{{position.start_date}} - {% if position.end_date %}{{position.end_date}}{% elif position.is_current %}Current{% endif %} ({{position.duration}})</em>
+        <em>{{position.start_date|date:"M Y"}} - {% if position.end_date %}{{position.end_date|date:"M Y"}}{% elif position.is_current %}Current{% endif %} ({{position.duration}})</em>
         {% if position.description %}
         {{position.description|format_description}}
         {% endif %}
@@ -88,7 +88,7 @@
         {% if program.name %}
         <h4><a href="{{program.url}}" target="_blank">{{program.degree}}, {{program.name}}</a></h4>
         {% endif %}
-        <em>{{program.start_date|date:"Y"}}{% if program.end_date and program.start_date != program.end_date %} - {{program.end_date|date:"Y"}}{% elif program.is_current %}current{% endif %}</em>
+        <em>{{program.start_date|date:"M Y"}}{% if program.end_date and program.start_date != program.end_date %} - {{program.end_date|date:"M Y"}}{% elif program.is_current %}current{% endif %}</em>
       </section>
       {% endfor %}
     </section>
