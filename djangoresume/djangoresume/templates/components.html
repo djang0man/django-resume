@@ -109,7 +109,7 @@
       {% for certificate in institution.certificates %}
       <section>
         {% if certificate.name %}
-        <h4><a href="{{certifiate.url}}" target="_blank">{{certificate.name}}</a></h4>
+        <h4><a href="{{certificate.url}}" target="_blank">{{certificate.name}}</a></h4>
         {% endif %}
         <em>{{certificate.valid_from|date:"M Y"}}{% if certificate.valid_until and certificate.valid_from != certificate.valid_until %} - {{certificate.valid_until|date:"M Y"}}{% endif %}</em>
       </section>
