@@ -62,6 +62,17 @@ def combine_schools_programs_courses(schools, programs, courses):
     return schools
 
 
+def combine_institutions_certifications(institutions, certifications):
+    for i in institutions:
+        i.certifications = list()
+
+        for c in certifications:
+            if c.institution_id == i.id:
+                i.certifications.append(c)
+
+    return institutions
+
+
 def get_position_duration(start_date, end_date=None, is_current=False):
     if is_current:
         until_date = datetime.datetime.now()
@@ -122,6 +133,21 @@ def get_resume_json(username):
             user_schools, user_programs, user_courses
         )
 
+    user_institutions = Institution.objects.all()\
+        .filter(profile__id=user_profile.id)\
+        .order_by('order_id')
+
+    user_certifications = \
+        Certification.objects.all()\
+        .filter(profile__id=user_profile.id)\
+        .order_by('valid_from')\
+        .reverse()
+
+    user_certificates = \
+        combine_institutions_certifications(
+            user_institutions, user_certifications
+        )
+
     json_body = {
         'name': user_profile.name,
         'email': user_profile.email,
@@ -180,6 +206,24 @@ def get_resume_json(username):
                         } for p in s.programs
                     ]
                 } for s in user_education
+            ]
+        },
+        'certifications': {
+            'institutions': [
+                {
+                    'name': i.name,
+                    'url': i.url,
+                    'certificates': [
+                        {
+                            'name': c.name,
+                            'url': c.url,
+                            'expires': c.will_expire,
+                            'valid_from': c.valid_from,
+                            'valid_until': c.valid_to,
+                            'description': c.description
+                        } for c in i.certifications
+                    ]
+                } for i in user_certificates
             ]
         }
     }

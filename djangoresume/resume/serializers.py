@@ -31,7 +31,7 @@ class WebsiteSerializer(serializers.HyperlinkedModelSerializer):
 
 class InterestSerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
-        model = Interest 
+        model = Interest
         fields = ('name', 'order_id')
 
 
@@ -70,7 +70,7 @@ class CourseSerializer(serializers.HyperlinkedModelSerializer):
 class InstitutionSerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
         model = Institution
-        fields = ('name', 'url')
+        fields = ('name', 'url', 'order_id')
 
 
 class CertificationSerializer(serializers.HyperlinkedModelSerializer):
