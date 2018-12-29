@@ -111,7 +111,7 @@
         {% if certificate.name %}
         <h4><a href="{{certificate.url}}" target="_blank">{{certificate.name}}</a></h4>
         {% endif %}
-        <em>{{certificate.valid_from|date:"M Y"}}{% if certificate.valid_until and certificate.valid_from != certificate.valid_until %} - {{certificate.valid_until|date:"M Y"}}{% endif %}</em>
+        <em>Issued {{certificate.valid_from|date:"M Y"}}{% if certificate.valid_until and certificate.valid_from != certificate.valid_until %} - Expires {{certificate.valid_until|date:"M Y"}}{% endif %}</em>
       </section>
       {% endfor %}
     </section>
