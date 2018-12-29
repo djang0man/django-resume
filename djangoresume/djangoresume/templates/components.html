@@ -97,3 +97,25 @@
   {% endif %}
 {% endblock %}
 
+{% block certifications %}
+  {% if certifications %}
+  <article id="certifications">
+    <header>
+      <h2>Certificates</h2>
+    </header>
+    {% for institution in certifications.institutions %}
+    <section>
+      <h3><a href="{{institution.url}}" target="_blank">{{institution.name}}</a></h3>
+      {% for certificate in institution.certificates %}
+      <section>
+        {% if certificate.name %}
+        <h4><a href="{{certifiate.url}}" target="_blank">{{certificate.name}}</a></h4>
+        {% endif %}
+        <em>{{certificate.valid_from|date:"M Y"}}{% if certificate.valid_until and certificate.valid_from != certificate.valid_until %} - {{certificate.valid_until|date:"M Y"}}{% endif %}</em>
+      </section>
+      {% endfor %}
+    </section>
+    {% endfor %}
+  </article>
+  {% endif %}
+{% endblock %}
